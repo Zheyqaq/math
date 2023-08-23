@@ -1,24 +1,25 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import time
+nums = 0
 
 
-def draw(lsss: list):
+def draw(lsss: list, nums):
     plt.plot(range(len(lsss)), lsss)
     plt.xlabel("Len")
     plt.ylabel("height")
-    plt.show()
     plt.figure(figsize=(640, 480))
-    result.append(len(lentap))
+    plt.savefig(f"{nums}lss.jpg")
+    nums += 1
 
 
 level = pd.read_excel("./data/附件1_工件1的测量数据.xlsx")
-# print(level)
-# x = level.x
 z = level.z
 result = []
 lens = 0
 zlist = list(z)
 lentap = []
+lentaps = []
 R = []
 for i in range(len(zlist)):
     if i + 1 >= len(zlist):
@@ -26,10 +27,16 @@ for i in range(len(zlist)):
     if zlist[i] > -1.77571:
         if len(lentap) != 0:
             if min(lentap) < -2.3:
-                draw(lentap)
+                draw(lentap, nums)
+                result.append(len(lentap))
+                lentaps.append(lentap)
         lentap.clear()
         continue
     else:
         lentap.append(zlist[i])
 
-draw(R)
+draw(R, nums)
+
+for i in lentaps:
+    time.sleep(5)
+    draw(i,nums)
